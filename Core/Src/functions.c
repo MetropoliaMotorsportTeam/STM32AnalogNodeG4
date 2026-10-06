@@ -31,62 +31,6 @@ calib_code = 1  -> low_adc is valid
 calib_code = 2  -> high_adc is valid
 calib_code = 3  -> both are valid
 */
-void CanSend(uint8_t* TxData)
-{
-  TxHeader.DataLength = FDCAN_DLC_BYTES_2;
-  while (HAL_FDCAN_GetTxFifoFreeLevel(&hfdcan1) != 0 &&
-         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
-
-uint8_t CanSendMsg(CAN_Message msg)
-{
-  TxHeader.Identifier = msg.Id;
-  TxHeader.DataLength = msg.DLC;
-  uint32_t curr_time = HAL_GetTick();
-
-  while (HAL_FDCAN_GetTxFifoFreeLevel(&hfdcan1) == 0)
-  {
-    if (HAL_GetTick() - curr_time >= 5000)
-      return 0;
-  };
-
-  if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, msg.Bytes) != HAL_OK)
-  {
-    return 0;
-    Error_Handler();
-  }
-  return 1;
-}
-
-void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef* hfdcan, uint32_t RxFifo0ITs)
-{
-  if ((RxFifo0ITs & FDCAN_IT_RX_FIFO0_NEW_MESSAGE) != RESET)
-  {
-    /* Retreive Rx messages from RX FIFO0 */
-    if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &RxHeader, RxMessage.Bytes) != HAL_OK)
-    {
-      /* Reception Error */
-      Error_Handler();
-    }
-    else
-    {
-
-      RxMessage.Id = RxHeader.Identifier;
-      RxMessage.DLC = RxHeader.DataLength;
-
-      CANRxReady = 1;
-    }
-
-    if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
-    {
-      /* Notification Error */
-      Error_Handler();
-    }
-  }
-}
 
 void print(uint16_t select)
 {
@@ -157,7 +101,7 @@ void calibration()
       min_value = sensors[sensor_for_calib].averages;
     }
 
-    if (calibration_counter >= (5000 / CAN_interval))
+    if (calibration_counter >= (1000 / CAN_interval))
     {
 
       calibration_value = calibration_value / calibration_counter;
@@ -186,7 +130,6 @@ void decode(CAN_Message msg)
   case CAN_CALIB_ID:
     sensor_for_calib = msg.Bytes[0];
     calib_select = msg.Bytes[1];
-    calibration();
     break;
   case CAN_CHANGE_CONFIG:
     process_config(msg.Bytes[0]);

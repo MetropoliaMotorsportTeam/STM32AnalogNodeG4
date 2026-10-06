@@ -1,0 +1,4 @@
+../Core/Src/virtual_sensors.c:8:6:update_pedalreq	4
+../Core/Src/virtual_sensors.c:47:6:init_virtual_sensor	1
+../Core/Src/virtual_sensors.c:58:6:add_input_sensor	2
+../Core/Src/virtual_sensors.c:66:6:update_virtual_sensor	2

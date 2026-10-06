@@ -1,0 +1,9 @@
+../Core/Src/pedal_map.c:16:13:process_pedal_status	8
+../Core/Src/pedal_map.c:57:9:pedal_map	4
+../Core/Src/pedal_map.c:99:6:change_preset_pedal_profile	3
+../Core/Src/pedal_map.c:116:9:validate_pedal_profile	5
+../Core/Src/pedal_map.c:145:6:process_pedal_profile_add	11
+../Core/Src/pedal_map.c:172:9:add_pedal_profile	5
+../Core/Src/pedal_map.c:187:6:process_pedal_profile_change	5
+../Core/Src/pedal_map.c:211:6:process_pedal_flash_save	1
+../Core/Src/pedal_map.c:222:6:init_pedal_map	4

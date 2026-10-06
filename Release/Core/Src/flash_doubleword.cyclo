@@ -1,0 +1,2 @@
+../Core/Src/flash_doubleword.c:45:18:get_saved_conf	3
+../Core/Src/flash_doubleword.c:10:19:save_config	6

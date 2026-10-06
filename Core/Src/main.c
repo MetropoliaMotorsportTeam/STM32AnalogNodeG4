@@ -62,7 +62,7 @@ uint16_t all_raw_data[SENSOR_NUM][ROLLING_AVE];
 uint8_t AVE_POS = 0;
 uint16_t CAN_interval = 1;
 uint16_t init_can_id = 1;
-uint32_t millis;
+volatile uint32_t millis;
 uint8_t CAN_enable = 0;
 extern volatile uint8_t CANRxReady;
 
@@ -130,8 +130,6 @@ int main(void)
     Error_Handler();
   }
 
-  uint8_t counter = 0;
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -150,14 +148,30 @@ int main(void)
         __enable_irq();
         decode(msg);
       }
-      if (millis % CAN_interval == 0)
+      // run the scheduler once per millisecond, not once per loop pass
+      static uint32_t last_tick = UINT32_MAX;
+      uint32_t now = millis;
+      if (now != last_tick)
       {
-        print(counter);
-        counter++;
-        if (counter == SENSOR_NUM)
+        last_tick = now;
+
+        if (now % CAN_interval == 0)
+        {
+          calibration();
+        }
+
+        // each sensor is sent at its own interval
+        for (uint8_t i = 0; i < SENSOR_NUM; i++)
+        {
+          if (sensors[i].CAN_interval && (now + i) % sensors[i].CAN_interval == 0)
+          {
+            print(i);
+          }
+        }
+
+        if (now % 250 == 0)
         {
           HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-          counter = 0;
         }
       }
     }
