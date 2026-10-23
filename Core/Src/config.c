@@ -67,13 +67,13 @@ void process_config(uint8_t config)
 
 static void config_1(void)
 {
-  Sensor BTN1 = {TF_BTN, BTN1_ID, 100, 0, V5_in0};
-  Sensor BTN2 = {TF_BTN, BTN2_ID, 100, 0, V5_in5};
-  Sensor BTN3 = {TF_BTN, BTN3_ID, 100, 0, V5_in4};
-  Sensor APPS2 = {TF_APPS2, APPS2_ID, 100, 0, V5_in1};
-  Sensor APPS1 = {TF_APPS1, APPS1_ID, 100, 0, V24_in1};
-  Sensor STEERING_ANGLE = {TF_24V, SteeringAngle_ID, 100, 0, V24_in0};
-  Sensor BPPS = {TF_BPPS, BPPS_ID, 100, 0, V5_in2};
+  Sensor BTN1 = {TF_BTN, BTN1_ID, 200, 0, V5_in0};
+  Sensor BTN2 = {TF_BTN, BTN2_ID, 200, 0, V5_in5};
+  Sensor BTN3 = {TF_BTN, BTN3_ID, 200, 0, V5_in4};
+  Sensor APPS2 = {TF_APPS2, APPS2_ID, 10, 0, V5_in1};
+  Sensor APPS1 = {TF_APPS1, APPS1_ID, 10, 0, V24_in1};
+  Sensor STEERING_ANGLE = {TF_24V, SteeringAngle_ID, 10, 0, V24_in0};
+  Sensor BPPS = {TF_BPPS, BPPS_ID, 10, 0, V5_in2};
   Sensor F_ROLL = {TF_5V, Rolls1_ID, 100, 0, V5_in6};
   Sensor F_HEAVE = {TF_5V, HeavesFront_ID, 100, 0, V5_in3};
 

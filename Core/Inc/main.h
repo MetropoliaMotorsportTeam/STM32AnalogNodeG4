@@ -100,7 +100,7 @@ void Error_Handler(void);
   extern uint16_t ADC2Data[6];
   extern uint8_t AVE_POS;
   extern uint16_t CAN_interval;
-  extern uint32_t millis;
+  extern volatile uint32_t millis;
   extern uint8_t CAN_enable;
   extern uint8_t CAL_counter;
   extern uint8_t CAL_ON;

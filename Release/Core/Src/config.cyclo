@@ -1,0 +1,5 @@
+../Core/Src/config.c:61:13:config_1	1
+../Core/Src/config.c:15:6:Config_Setup	1
+../Core/Src/config.c:23:6:apply_config	5
+../Core/Src/config.c:44:6:load_config	1
+../Core/Src/config.c:52:6:process_config	2
