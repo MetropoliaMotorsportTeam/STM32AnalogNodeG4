@@ -118,9 +118,6 @@ void sent_calib_done()
   ADC_Calib_Update();
 }
 
-static uint8_t calibration_counter = 0;
-static uint16_t calibration_value = 0;
-
 static uint16_t max_value = 0;
 static uint16_t min_value = 65535;
 
@@ -136,7 +133,8 @@ void set_calib_values(uint8_t sensor, int8_t select)
 
 void calibration()
 {
-
+  static uint8_t calibration_counter = 0;
+  static uint16_t calibration_value = 0;
   if (calib_select == -1)
   {
     return;
